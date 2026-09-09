@@ -202,7 +202,11 @@ function placeShip () {
         });
     }
     cachedListeners = []
- 
+    
+    for (i of indices) {
+        cells[i].classList.toggle('placedShip')
+    }
+
     document.getElementById('rotate-ship-btn').classList.toggle('hidden')   
     document.getElementById('confirm-ship-btn').classList.toggle('hidden')
     document.getElementById('reset-ship-btn').classList.toggle('hidden')
@@ -210,6 +214,10 @@ function placeShip () {
 }
 
 function resetShip () {
+    for (i of indices) {
+        cells[i].classList.toggle('placedShip')
+    }
+
     placeShipAddEventListeners()
     document.getElementById('rotate-ship-btn').classList.toggle('hidden')   
     document.getElementById('confirm-ship-btn').classList.toggle('hidden')
@@ -279,6 +287,10 @@ function placeShipAddEventListeners() {
 }
 
 function nextPlayerPlaceShip() {
+    for (i of indices) {
+        cells[i].classList.toggle('placedShip')
+    }
+
     if (turn === 0) {
         cells.forEach((cell) => cell.classList.remove('highlightShip'))
         placeShipAddEventListeners()
@@ -310,7 +322,6 @@ function gameplay () {
 
 // Validates the user input after a click event
 function checkUserInput (cell, index) {
-    console.log(index)
     gameData[turn]['Player Board'].push(index) // Appends the index of the clicked cell and saves it in the playerBoard
     const enemy = turn === 0 ? 1 : 0
     const hit = gameData[enemy]['Ship Location'].includes(index)
@@ -322,16 +333,20 @@ function checkUserInput (cell, index) {
     }
     
     if (gameData[enemy]['Ship Location'].every( x => gameData[turn]['Player Board'].includes(x))) {
-        winMessage.innerHTML = "You  sunk " + gameData[enemy]['Name'] +"'s ship. <br>" + gameData[turn]['Name'] + " wins." // Display victory message
+        winMessage.innerHTML = gameData[enemy]['Name'] +"'s ship has fallen. <br>" + gameData[turn]['Name'] + " wins." // Display victory message
         gameOver()
     } else if (hit) {
         genMessage.textContent = gameData[turn]['Name'] + "'s turn"
-        winMessage.innerHTML = "You hit the " + gameData[enemy]['Name'] + " ship.<br> Your turn again."
+        winMessage.innerHTML = "You hit the " + gameData[enemy]['Name'] + "'s ship.<br> Your turn again."
+        cell.classList.remove('active-cell')
         return
     } else {
         cachedListeners.forEach(({ element, handler }) => {
             element.removeEventListener('click', handler);
         });
+
+        cells.forEach((cell, index) => {
+            cell.classList.remove('active-cells')})
 
         document.getElementById('confirm-turn-btn').classList.toggle('hidden')
         winMessage.textContent = ""
@@ -376,6 +391,8 @@ function cellsAddEventListener () {
             const handler = () => checkUserInput(cell, index);
             cell.addEventListener('click', handler);
             cachedListeners.push({ element: cell, handler: handler });
+
+            cell.classList.toggle('active-cells')
         }
     })
 }

@@ -55,6 +55,7 @@ h1 {
     color: #0DE991;
     font-weight: bold;
     font-size: 48px;
+    margin-bottom: 20px;
 }
 
 #enter-names {
@@ -74,7 +75,6 @@ h1 {
     border: #0DE991 1px solid;
     max-width: 250px;
     margin: 14px;
-
     font-size: 28px;
     color: #0DE991;
 }
@@ -87,6 +87,16 @@ h1 {
     border: none;
     padding: 8px 19px;
     margin-top: 40px;
+    transition: 300ms;
+    cursor: pointer;
+}
+
+#start-game-btn:hover {
+    background-color: #9187FF;
+    transition: 300ms;
+    letter-spacing: 1.5px;
+    box-shadow: 0px 25x 60px #00000019;
+    transform: translateY(-5px);
 }
 
 /* ----------------------- GAME --------------------- */
@@ -102,9 +112,23 @@ h1 {
 }
 
 .cell {
-    width:  50px;
-    height: 50px;
+    width:  60px;
+    height: 60px;
     border: 1px solid #49C8FF;
+    cursor: pointer;
+}
+
+.active-cells:hover{
+    background-color: #49C8FF;
+    transition: 300ms;
+}
+
+.highlightShip {
+    background-color: #9187FF;
+}
+
+.placedShip {
+    background-color: #0DE991;
 }
 
 #buttons-wrapper > button {
@@ -114,17 +138,23 @@ h1 {
     font-weight: bold;
     border: none;
     padding: 8px 19px;
-    margin-top: 40px;
+    margin-top: 10px;
+    transition: 300ms;
+    cursor: pointer;
 }
 
-.faux-btn {
-    background-color: #001825 !important;
-    max-width: 1px;
+#buttons-wrapper > button:hover {
+    background-color: #9187FF;
+    transition: 300ms;
+    letter-spacing: 1px;
+    box-shadow: 0px 25x 60px #00000019;
+    transform: translateY(-5px);
 }
-
 
 #win-message {
-    font-size: 24px;
+    margin-top: 15px;
+    margin-bottom: 5px;
+    font-size: 20px;
 }
 
 .hit {
@@ -134,11 +164,6 @@ h1 {
 .miss::after {
     content: url("x.svg");
     text-align: center;
-    font-size: 48px;
-}
-
-.highlightShip {
-    background-color: #0DE991;
 }
 
 .hidden {
@@ -152,11 +177,24 @@ h1 {
     .instructions-text {
         font-size: 24px;
     }
+    #gen-message {
+        font-size: 28px;
+    }
+    #title-message {
+        font-size: 32px;
+    }
     #input-wrapper {
         display: block;
     }
     #start-game-btn {
         font-size: 24px;
+        margin-top: 20px;
     }
-
+    .cell {
+        width:  50px;
+        height: 50px;
+    }
+    .miss::after {
+        content: url("x-mobile.svg");
+    }
 }
