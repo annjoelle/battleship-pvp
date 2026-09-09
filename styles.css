@@ -1,0 +1,36 @@
+#board {
+    display: inline-grid;
+    /* grid-template-columns: 1fr 1fr 1fr 1fr; */
+}
+
+.cell {
+    width: 50px;
+    height: 50px;
+    border: 1px solid black;
+}
+
+.hit {
+    background-color: black;
+}
+
+.miss::after {
+    content: "❌"
+}
+
+/*
+.highlight-select {
+    cursor: pointer;
+}
+
+.disable-select {
+    background-color: rgb(173, 175, 173);
+}
+*/
+
+.highlightShip {
+    background-color: red;
+}
+
+.hidden {
+    display: none;
+}
