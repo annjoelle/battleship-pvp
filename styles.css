@@ -48,7 +48,7 @@ h1 {
 }
 
 .instructions-text, #gen-message {
-    font-size: 36px;
+    font-size: 32px;
 }
 
 #title-message {
@@ -103,7 +103,7 @@ h1 {
 
 #game-page {
     display: block;
-    height: 600px;
+    height: 680px;
 }
 
 #board {
@@ -170,6 +170,7 @@ h1 {
     display: none;
 }
 
+/* ---------------------- MOBILE ---------------- */
 @media (max-width: 600px) {
     h1 {
         font-size: 52px;
