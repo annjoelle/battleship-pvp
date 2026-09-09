@@ -291,6 +291,7 @@ placeShipAddEventListeners()
 function gameplay () {
     cellsAddEventListener ()
     genMessage.textContent = gameData[turn]['Name'] + "'s turn" 
+titleMessage.textContent = "SELECT YOUR TARGET"
 }
 
 // Validates the user input after a click event
