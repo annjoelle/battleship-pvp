@@ -1,20 +1,129 @@
+@import url('https://fonts.googleapis.com/css2?family=Kode+Mono:wght@400..700&display=swap');
+
+.kode-mono-font {
+  font-family: "Kode Mono", monospace;
+  font-optical-sizing: auto;
+  font-weight: 400, 500, 600, 700;
+  font-style: normal;
+}
+* {
+    margin: 0;
+    font-family: "Kode Mono", monospace;
+    color: #fff;
+    box-sizing: border-box;
+    text-align: center;
+}
+
+html, body {
+    height: 100%;
+}
+
+html {
+    display: table;
+    margin: auto;
+    background-color: #001825;
+}
+
+body {
+    margin: auto;
+    width: 100%;
+    max-width: 800px;
+    min-height: 100vh;
+    margin: auto;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+/* -------------- WELCOME PAGE ------------- */
+
+h1 {
+    color: #0DE991;
+    font-size: 80px;
+    margin-bottom: 0;
+}
+
+.instructions-text, #gen-message {
+    font-size: 36px;
+}
+
+#title-message {
+    color: #0DE991;
+    font-weight: bold;
+    font-size: 48px;
+}
+
+#enter-names {
+    margin-top: 30px;
+}
+
+#input-wrapper {
+    display: flex;
+}
+
+.player-x {
+    font-size: 24px;
+}
+
+.player-name-input {
+    background-color: transparent;
+    border: #0DE991 1px solid;
+    max-width: 250px;
+    margin: 14px;
+
+    font-size: 28px;
+    color: #0DE991;
+}
+
+#start-game-btn {
+    background-color: #00BD71;
+    color: #001825;
+    font-size: 32px;
+    font-weight: bold;
+    border: none;
+    padding: 8px 19px;
+    margin-top: 40px;
+}
+
+/* ----------------------- GAME --------------------- */
+
+#game-page {
+    display: block;
+}
+
 #board {
     display: inline-grid;
     /* grid-template-columns: 1fr 1fr 1fr 1fr; */
 }
 
 .cell {
-    width: 50px;
-    height: 50px;
-    border: 1px solid black;
+    width:  80px;
+    height: 80px;
+    border: 1px solid #49C8FF;
+}
+
+#buttons-wrapper > button {
+    background-color: #00BD71;
+    color: #001825;
+    font-size: 24px;
+    font-weight: bold;
+    border: none;
+    padding: 8px 19px;
+    margin-top: 40px;
+}
+
+#win-message {
+    font-size: 24px;
 }
 
 .hit {
-    background-color: black;
+    background-color: #0DE991;
 }
 
 .miss::after {
-    content: "❌"
+    content: url("x.png");
+    text-align: center;
+    font-size: 48px;
 }
 
 /*
@@ -28,9 +137,25 @@
 */
 
 .highlightShip {
-    background-color: red;
+    background-color: #0DE991;
 }
 
 .hidden {
     display: none;
+}
+
+@media (max-width: 600px) {
+    h1 {
+        font-size: 52px;
+    }
+    .instructions-text {
+        font-size: 24px;
+    }
+    #input-wrapper {
+        display: block;
+    }
+    #start-game-btn {
+        font-size: 24px;
+    }
+
 }

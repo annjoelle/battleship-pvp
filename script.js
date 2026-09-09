@@ -2,6 +2,8 @@
 
 const board = document.getElementById("board") // Get 'board' element from HTML
 const genMessage = document.getElementById("gen-message")
+const titleMessage = document.getElementById("title-message")
+const winMessage = document.getElementById("win-message")
 const buttonsWrap = document.getElementById("buttons-wrapper") // Get 'board' element from HTML
 const welcomePage = document.getElementById("welcome-page")
 /* ----------------------------------------- VARIABLES ----------------------------------------- */
@@ -135,7 +137,7 @@ function createBattleship () {
     console.log("Ship Location: " + shipLocation)
 }
 
-/* ----------------------------------------- DISPLAY HTML ----------------------------------------- */
+/* ----------------------------------------- DISPLAY BOARD ----------------------------------------- */
 
 // Finds and return the string of columns for "grid-template-columns" property 
 function findColumnSize () {
@@ -155,7 +157,7 @@ function displayBoard () {
     for (i = 0; i < boardSize**2; i++) {
         const cell = document.createElement("div");
         cell.innerHTML = `
-            <div class="cell hidden">${i}</div>
+            <div class="cell hidden"></div>
         `
         board.appendChild(cell)
     }
@@ -179,7 +181,8 @@ function startGame () {
 
     document.getElementById('rotate-ship-btn').classList.toggle('hidden')
 
-    genMessage.textContent = gameData[0]['Name'] + "'s turn to place your battleship."
+    genMessage.textContent = gameData[0]['Name'] + "'s turn"
+    titleMessage.textContent = "PLACE YOUR SHIP"
 }
 
 let cachedListeners = [];
@@ -272,7 +275,7 @@ function nextPlayerPlaceShip() {
         turn = 1
         shipOrientation = 0
 
-        genMessage.textContent = gameData[1]['Name'] + "'s turn to place your battleship"
+        genMessage.textContent = gameData[1]['Name'] + "'s turn"
     } else {
         cells.forEach((cell) => cell.classList.remove('highlightShip'))
         document.getElementById('confirm-ship-btn').classList.toggle('hidden')
@@ -304,10 +307,11 @@ function checkUserInput (cell, index) {
     }
     
     if (gameData[enemy]['Ship Location'].every( x => gameData[turn]['Player Board'].includes(x))) {
-        document.getElementById("win-message").textContent = "YOU HAVE SUNK " + gameData[enemy]['Name'] +"'S SHIP" // Display victory message
+        winMessage.innerHTML = "You  sunk " + gameData[enemy]['Name'] +"'s ship. <br>" + gameData[turn]['Name'] + " wins." // Display victory message
         gameOver()
     } else if (hit) {
-        genMessage.textContent = gameData[turn]['Name'] + " hit " + gameData[enemy]['Name'] + "'s ship. It's still your turn."
+        genMessage.textContent = gameData[turn]['Name'] + "'s turn"
+        winMessage.innerHTML = "You hit the " + gameData[enemy]['Name'] + " ship.<br> Your turn again."
         return
     } else {
         cachedListeners.forEach(({ element, handler }) => {
@@ -315,6 +319,7 @@ function checkUserInput (cell, index) {
         });
 
         document.getElementById('confirm-turn-btn').classList.toggle('hidden')
+        winMessage.textContent = ""
     }
 
 }

@@ -6,33 +6,35 @@
         <link rel="stylesheet" href="styles.css"/>
     </head>
     <body>
-        <div id="gen-message"></div>
-        <div id="board"></div>
-        <div id="win-message"></div>
-        <div id="buttons-wrapper">
-            <button onclick="rotateShip()" class="hidden" id="rotate-ship-btn">Rotate Ship</button>
-            <button onclick="nextPlayerPlaceShip()" class="hidden" id="confirm-ship-btn">Confirm</button>
-            <button onclick="nextPlayer()" class="hidden" id="confirm-turn-btn">Confirm</button>
+        <div id="game-page">
+            <div id="gen-message"></div>
+            <div id="title-message"></div>
+            <div id="board"></div>
+            <div id="win-message"></div>
+            <div id="buttons-wrapper">
+                <button onclick="rotateShip()" class="hidden" id="rotate-ship-btn">ROTATE SHIP</button>
+                <button onclick="nextPlayerPlaceShip()" class="hidden" id="confirm-ship-btn">CONFIRM</button>
+                <button onclick="nextPlayer()" class="hidden" id="confirm-turn-btn">END TURN</button>
+                <button id="replay-btn" class="hidden" onClick="window.location.reload()">PLAY AGAIN</button>
+            </div>
         </div>
-
         <div id="welcome-page" method="post" action="#" onsubmit="startGame();return false">
-            <div>BATTLESHIP</div>
-            <div>Enter your Names:</div>
+            <h1>BATTLESHIP</h1>
+            <div class="instructions-text">Enter your Names:</div>
             <form id="enter-names">
-                <div class="input-names-wrapper">
-                    <div class="player-x">Player 1</div>
-                    <input class="player-name-input" type="text" name="nameP1" id="name-p1" required/>
-                </div>
-                <div class="input-names-wrapper">
-                    <div class="player-x">Player 2</div>
-                    <input class="player-name-input" type="text" name="nameP2" id="name-p2" required/>
+                <div id="input-wrapper">
+                    <div class="input-names-wrapper">
+                        <div class="player-x">PLAYER 1</div>
+                        <input class="player-name-input" type="text" name="nameP1" id="name-p1" placeholder="Alpha" required/>
+                    </div>
+                    <div class="input-names-wrapper">
+                        <div class="player-x">PLAYER 2</div>
+                        <input class="player-name-input" type="text" name="nameP2" id="name-p2" placeholder="Beta" required/>
+                    </div>
                 </div>
                 <button id="start-game-btn" type="submit">START GAME</button>
             </form>
         </div>
-
-        <button id="replay-btn" class="hidden" onClick="window.location.reload()">PLAY AGAIN</button>
-
         <script src="script.js"></script>
     </body>
 </html>
