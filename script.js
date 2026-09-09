@@ -202,10 +202,22 @@ function placeShip () {
         });
     }
     cachedListeners = []
-
+ 
     document.getElementById('rotate-ship-btn').classList.toggle('hidden')   
     document.getElementById('confirm-ship-btn').classList.toggle('hidden')
+    document.getElementById('reset-ship-btn').classList.toggle('hidden')
     console.log("Player " + gameData[turn]['Player'] + ": " + gameData[turn]['Ship Location'])
+}
+
+function resetShip () {
+    placeShipAddEventListeners()
+    document.getElementById('rotate-ship-btn').classList.toggle('hidden')   
+    document.getElementById('confirm-ship-btn').classList.toggle('hidden')
+    document.getElementById('reset-ship-btn').classList.toggle('hidden')
+
+    for (i of gameData[turn]['Ship Location']) {
+        cells[i].classList.toggle('highlightShip')
+    }
 }
 
 function rotateShip () {
@@ -218,7 +230,7 @@ function highlightShip (indices) {
     }
 }
 
-function placeShipHover (cell, index) {
+function placeShipHover (index) {
 
     if (shipOrientation === 0) {
         if (index % boardSize === 0) {
@@ -248,13 +260,13 @@ function placeShipHover (cell, index) {
 
 function placeShipAddEventListeners() {
     cells.forEach((cell, index) => {
-        const handler = () => placeShipHover(cell, index);
+        const handler = () => placeShipHover(index);
         cell.addEventListener('mouseover', handler);
         cachedListeners.push({ element: cell, handler: handler });
     })
 
     cells.forEach((cell, index) => {
-        const handler = () => placeShipHover(cell, index);
+        const handler = () => placeShipHover(index);
         cell.addEventListener('mouseout', handler);
         cachedListeners.push({ element: cell, handler: handler });
     })
@@ -272,6 +284,7 @@ function nextPlayerPlaceShip() {
         placeShipAddEventListeners()
         document.getElementById('rotate-ship-btn').classList.toggle('hidden')   
         document.getElementById('confirm-ship-btn').classList.toggle('hidden')
+        document.getElementById('reset-ship-btn').classList.toggle('hidden')
         turn = 1
         shipOrientation = 0
 
@@ -279,6 +292,7 @@ function nextPlayerPlaceShip() {
     } else {
         cells.forEach((cell) => cell.classList.remove('highlightShip'))
         document.getElementById('confirm-ship-btn').classList.toggle('hidden')
+        document.getElementById('reset-ship-btn').classList.toggle('hidden')
         turn = 0
         gameplay()
     }
@@ -291,7 +305,7 @@ placeShipAddEventListeners()
 function gameplay () {
     cellsAddEventListener ()
     genMessage.textContent = gameData[turn]['Name'] + "'s turn" 
-titleMessage.textContent = "SELECT YOUR TARGET"
+    titleMessage.textContent = "SELECT YOUR TARGET"
 }
 
 // Validates the user input after a click event
