@@ -7,7 +7,7 @@
         <link rel="stylesheet" href="styles.css"/>
     </head>
     <body>
-        <div id="game-page">
+        <div id="game-page" class="hidden">
             <div id="gen-message"></div>
             <div id="title-message"></div>
             <div id="board"></div>
@@ -20,17 +20,17 @@
                 <button id="replay-btn" class="hidden" onClick="window.location.reload()">PLAY AGAIN</button>
             </div>
         </div>
-        <div id="welcome-page" method="post" action="#" onsubmit="startGame();return false">
+        <div id="welcome-page">
             <h1>BATTLESHIP</h1>
             <div class="instructions-text">Enter your Names:</div>
-            <form id="enter-names">
+            <form id="enter-names" method="post" action="#" onsubmit="startGame(); return false;">
                 <div id="input-wrapper">
                     <div class="input-names-wrapper">
-                        <div class="player-x">PLAYER 1</div>
+                        <label class="player-x" for="name-p1">PLAYER 1</label>
                         <input class="player-name-input" type="text" name="nameP1" id="name-p1" placeholder="Alpha" maxlength="10" required/>
                     </div>
                     <div class="input-names-wrapper">
-                        <div class="player-x">PLAYER 2</div>
+                        <label class="player-x" for="name-p2">PLAYER 2</label>
                         <input class="player-name-input" type="text" name="nameP2" id="name-p2" placeholder="Beta" maxlength="10" required/>
                     </div>
                 </div>

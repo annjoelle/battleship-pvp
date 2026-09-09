@@ -67,6 +67,7 @@ h1 {
 }
 
 .player-x {
+    display: block;
     font-size: 24px;
 }
 
@@ -95,7 +96,7 @@ h1 {
     background-color: #9187FF;
     transition: 300ms;
     letter-spacing: 1.5px;
-    box-shadow: 0px 25x 60px #00000019;
+    box-shadow: 0px 25px 60px #00000019;
     transform: translateY(-5px);
 }
 
@@ -104,6 +105,10 @@ h1 {
 #game-page {
     display: block;
     height: 680px;
+}
+
+#game-page.hidden {
+    display: none;
 }
 
 #board {
@@ -147,7 +152,7 @@ h1 {
     background-color: #9187FF;
     transition: 300ms;
     letter-spacing: 1px;
-    box-shadow: 0px 25x 60px #00000019;
+    box-shadow: 0px 25px 60px #00000019;
     transform: translateY(-5px);
 }
 

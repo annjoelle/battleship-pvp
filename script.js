@@ -4,27 +4,24 @@ const board = document.getElementById("board") // Get 'board' element from HTML
 const genMessage = document.getElementById("gen-message")
 const titleMessage = document.getElementById("title-message")
 const winMessage = document.getElementById("win-message")
-const buttonsWrap = document.getElementById("buttons-wrapper") // Get 'board' element from HTML
 const welcomePage = document.getElementById("welcome-page")
+const gamePage = document.getElementById("game-page")
 /* ----------------------------------------- VARIABLES ----------------------------------------- */
 
 const boardSize = 7 // Declare Board Size
-const playerBoard = []
-
-let shipLocation = []
 
 // Holds the data of the players and the game
 const gameData = [
     {
-        'Player': 1,
-        'Name': "",
-        'Ship Location': [],
-        'Player Board': []
+        player: 1,
+        name: "",
+        shipLocation: [],
+        playerBoard: []
     }, {
-        'Player': 2,
-        'Name': "",
-        'Ship Location': [],
-        'Player Board': []
+        player: 2,
+        name: "",
+        shipLocation: [],
+        playerBoard: []
     }
 ]
 
@@ -58,78 +55,6 @@ function shipPositionMidV (num) {
 function shipPositionBottom (num) {
     // Returns array of the ship position at num and 2 cells above of num
     return [num, num - boardSize, num - (boardSize * 2)]
-}
-
-/* --------------------------------------- PLAYER VS COMPUTER ------------------------------------- */
-// Random computer-generated battleship 
-function createBattleship () {
-    const direction = Math.round(Math.random() * (1)) // Generates direction: 0 = Horizontal, 1 = Vertical
-    const num = Math.round(Math.random() * ((boardSize ** 2)- 1)) // Generates Battleship Cell Position
-
-    // If direction is horizontal
-    if (direction === 0) {
-
-        // If num's position is on the leftmost side
-        if (num % boardSize === 0) {
-            shipLocation = shipPositionLeft(num) // Ship location is at num and 2 cells right of num
-        }
-
-        // If num's position is on the rightmost side
-        else if (num % boardSize === boardSize - 1) {
-            shipLocation = shipPositionRight(num) // Ship location is at num and 2 cells left of num
-        }
-
-        // Else if num's position is not on the edges of the board
-        else {
-            // Generate the position of num in 1x3 ship: 0 = Left; 1 = Middle; 2 = Right
-            let numPosition
-            
-            if (num % boardSize === 1) {
-                numPosition = Math.round(Math.random() * 1) // Excludes Right (2) option if num is positioned in the second column
-            } else if (num % boardSize === boardSize - 2) {
-                numPosition = Math.round(Math.random() * 1) + 1 // Excludes Left (0) option if num is positioned in the second rightmost column
-            } else {
-                numPosition = Math.round(Math.random() * 2) // Generate the position of num in 1x3 ship: 0 = Left; 1 = Middle; 2 = Right
-            }
-
-            if (numPosition === 0) { // If random position returns 0 (LEFT)
-                shipLocation = shipPositionLeft(num) // Gets the ship's location in an array of three numbers 
-            } else if (numPosition === 1) { // If random position returns 1 (MIDDLE)
-                shipLocation = shipPositionMidH(num)// Gets the ship's location in an array of three numbers 
-            } else if (numPosition === 2) { // If random postition returns 2 (RIGHT)
-                shipLocation = shipPositionRight(num) // Gets the ship's location in an array of three numbers 
-            }
-        }
-    } else if (direction === 1) { // If direction is vertical
-        // If num's position is on the top row
-        if (num < boardSize) {
-            shipLocation = shipPositionTop(num) // Ship location is at num and 2 cells below num
-        }
-        // If num's position is on the bottom
-        else if (num >= boardSize * (boardSize - 1)) {
-            shipLocation = shipPositionBottom(num) // Ship location is at num and 2 cells above num
-        }
-        else {
-            // Generate the position of num in 1x3 ship: 0 = Top; 1 = Middle; 2 = Bottom
-            let numPosition
-            
-            if (num < boardSize * 2) {
-                numPosition = Math.round(Math.random() * 1) // Excludes Bottom (2) option if num is positioned in the second topmost row
-            } else if (num >= boardSize * (boardSize - 2)) {
-                numPosition = Math.round(Math.random() * 1) + 1 // Excludes Top (0) option if num is positioned in the second bottommost row
-            } else {
-                numPosition = Math.round(Math.random() * 2) // Generate the position of num in 1x3 ship: 0 = Top; 1 = Middle; 2 = Bottom
-            }
-
-            if (numPosition === 0) { // If random position returns 0 (TOP)
-                shipLocation = shipPositionTop(num) // Gets the ship's location in an array of three numbers 
-            } else if (numPosition === 1) { // If random position returns 1 (MIDDLE)
-                shipLocation = shipPositionMidV(num) // Gets the ship's location in an array of three numbers 
-            } else if (numPosition === 2) { // If random position returns 2 (BOTTOM)
-                shipLocation = shipPositionBottom(num) // Gets the ship's location in an array of three numbers 
-            }
-        }
-    }
 }
 
 /* ----------------------------------------- DISPLAY BOARD ----------------------------------------- */
@@ -166,10 +91,11 @@ const cells = document.querySelectorAll(".cell") // Get all cells on the board
 // start-game-btn on click opens the board for placing ships
 function startGame () {
     // Retrieve player names
-    gameData[0]['Name'] = document.getElementById("enter-names").nameP1.value
-    gameData[1]['Name'] = document.getElementById("enter-names").nameP2.value
+    gameData[0].name = document.getElementById("enter-names").nameP1.value
+    gameData[1].name = document.getElementById("enter-names").nameP2.value
     
-    document.getElementById('welcome-page').classList.toggle('hidden') // Hides welcome page
+    welcomePage.classList.toggle('hidden') // Hides welcome page
+    gamePage.classList.toggle('hidden') // Unhides game page
 
     cells.forEach((cell) => {
         cell.classList.toggle('hidden') // Unhides game board
@@ -178,7 +104,7 @@ function startGame () {
     document.getElementById('rotate-ship-btn').classList.toggle('hidden') // Unhides rotate-ship-btn
 
     // Displays instruction texts
-    genMessage.textContent = gameData[0]['Name'] + "'s turn"
+    genMessage.textContent = gameData[0].name + "'s turn"
     titleMessage.textContent = "PLACE YOUR SHIP"
 }
 
@@ -191,7 +117,7 @@ let indices = [] // Stores current selected index placement from user input
 
 // When a click is triggered on the cells
 function placeShip () {
-    gameData[turn]['Ship Location'] = indices // Stores the selected indices into the current players game data
+    gameData[turn].shipLocation = indices // Stores the selected indices into the current players game data
 
     // Removes event listeners on cells (click & hover functions)
     const events = ['click', 'mouseover', 'mouseout']
@@ -228,7 +154,7 @@ function resetShip () {
     document.getElementById('reset-ship-btn').classList.toggle('hidden')
 
     // Removes highlights from previously selected cells
-    for (i of gameData[turn]['Ship Location']) {
+    for (i of gameData[turn].shipLocation) {
         cells[i].classList.toggle('highlightShip')
     }
 }
@@ -327,7 +253,7 @@ function nextPlayerPlaceShip() {
         
         turn = 1 // Switches turn to Player 2
         shipOrientation = 0 // Resets ship rotation to default
-        genMessage.textContent = gameData[1]['Name'] + "'s turn" // Replaces name to current player
+        genMessage.textContent = gameData[1].name + "'s turn" // Replaces name to current player
     } 
     // If Player 2's turn was the last one
     else {
@@ -350,15 +276,15 @@ placeShipAddEventListeners()
 // Gameplay start function
 function gameplay () {
     cellsAddEventListener () // Activates event listeners
-    genMessage.textContent = gameData[turn]['Name'] + "'s turn" // Displays current player's turn
+    genMessage.textContent = gameData[turn].name + "'s turn" // Displays current player's turn
     titleMessage.textContent = "SELECT YOUR TARGET" // Displays the instructions
 }
 
 // Validates the user input after a click event
 function checkUserInput (cell, index) {
-    gameData[turn]['Player Board'].push(index) // Appends the index of the clicked cell and saves it in the playerBoard
+    gameData[turn].playerBoard.push(index) // Appends the index of the clicked cell and saves it in the playerBoard
     const enemy = turn === 0 ? 1 : 0 // Enemy = !turn
-    const hit = gameData[enemy]['Ship Location'].includes(index) // Identifies if it's a hit or miss
+    const hit = gameData[enemy].shipLocation.includes(index) // Identifies if it's a hit or miss
 
     if (hit) {
         cell.classList.add("hit") // Adds CSS styling if input is a hit
@@ -367,14 +293,14 @@ function checkUserInput (cell, index) {
     }
     
     // If all 3 cells have been hit
-    if (gameData[enemy]['Ship Location'].every( x => gameData[turn]['Player Board'].includes(x))) {
-        winMessage.innerHTML = gameData[enemy]['Name'] +"'s ship has fallen. <br>" + gameData[turn]['Name'] + " wins." // Display victory message
+    if (gameData[enemy].shipLocation.every( x => gameData[turn].playerBoard.includes(x))) {
+        winMessage.innerHTML = gameData[enemy].name +"'s ship has fallen. <br>" + gameData[turn].name + " wins." // Display victory message
         gameOver()
     } 
     // Else it's a hit
     else if (hit) {
-        winMessage.innerHTML = "You hit the " + gameData[enemy]['Name'] + "'s ship.<br> Your turn again." // Displays hit message
-        cell.classList.remove('active-cell') // Disables hover effect on the selected cell
+        winMessage.innerHTML = "You hit the " + gameData[enemy].name + "'s ship.<br> Your turn again." // Displays hit message
+        cell.classList.remove('active-cells') // Disables hover effect on the selected cell (was a typo: 'active-cell')
         return
     } 
     // If it's a miss
@@ -407,11 +333,11 @@ function nextPlayer () {
 
     cellsAddEventListener() // Activated event listeners
     document.getElementById('confirm-turn-btn').classList.toggle('hidden') // Hides end turn button
-    genMessage.textContent = gameData[turn]['Name'] + "'s turn"  // Display's current player's turn
+    genMessage.textContent = gameData[turn].name + "'s turn"  // Display's current player's turn
 
     // Displays the progress of the current player's board
-    for (item of gameData[turn]['Player Board']) {
-        const state = gameData[enemy]['Ship Location'].includes(item) ? 'hit' : 'miss'
+    for (item of gameData[turn].playerBoard) {
+        const state = gameData[enemy].shipLocation.includes(item) ? 'hit' : 'miss'
         cells[item].classList.add(state)
     }
 }
@@ -430,7 +356,7 @@ function gameOver () {
 function cellsAddEventListener () {
     cells.forEach((cell, index) => {
         // If the cell has been played in the previous turns, no event listener is added
-        if (gameData[turn]['Player Board'].includes(index)) { 
+        if (gameData[turn].playerBoard.includes(index)) { 
             return
         } 
         // Adds event listeners to unplayed cells
@@ -443,4 +369,3 @@ function cellsAddEventListener () {
         }
     })
 }
-
