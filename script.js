@@ -8,7 +8,7 @@ const buttonsWrap = document.getElementById("buttons-wrapper") // Get 'board' el
 const welcomePage = document.getElementById("welcome-page")
 /* ----------------------------------------- VARIABLES ----------------------------------------- */
 
-const boardSize = 5 // Declare Board Size
+const boardSize = 7 // Declare Board Size
 const playerBoard = []
 
 let shipLocation = []
@@ -370,9 +370,13 @@ function gameOver () {
 
 function cellsAddEventListener () {
     cells.forEach((cell, index) => {
-        const handler = () => checkUserInput(cell, index);
-        cell.addEventListener('click', handler);
-        cachedListeners.push({ element: cell, handler: handler });
+        if (gameData[turn]['Player Board'].includes(index)) { 
+            return
+        } else { 
+            const handler = () => checkUserInput(cell, index);
+            cell.addEventListener('click', handler);
+            cachedListeners.push({ element: cell, handler: handler });
+        }
     })
 }
 

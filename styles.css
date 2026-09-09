@@ -35,6 +35,10 @@ body {
     align-items: center;
 }
 
+.faux-btn {
+    background-color: transparent;
+}
+
 /* -------------- WELCOME PAGE ------------- */
 
 h1 {
@@ -89,6 +93,7 @@ h1 {
 
 #game-page {
     display: block;
+    height: 600px;
 }
 
 #board {
@@ -97,8 +102,8 @@ h1 {
 }
 
 .cell {
-    width:  80px;
-    height: 80px;
+    width:  50px;
+    height: 50px;
     border: 1px solid #49C8FF;
 }
 
@@ -112,6 +117,12 @@ h1 {
     margin-top: 40px;
 }
 
+.faux-btn {
+    background-color: #001825 !important;
+    max-width: 1px;
+}
+
+
 #win-message {
     font-size: 24px;
 }
@@ -121,20 +132,10 @@ h1 {
 }
 
 .miss::after {
-    content: url("x.png");
+    content: url("x.svg");
     text-align: center;
     font-size: 48px;
 }
-
-/*
-.highlight-select {
-    cursor: pointer;
-}
-
-.disable-select {
-    background-color: rgb(173, 175, 173);
-}
-*/
 
 .highlightShip {
     background-color: #0DE991;
