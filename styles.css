@@ -119,7 +119,7 @@ h1 {
 }
 
 .active-cells:hover{
-    background-color: #49C8FF;
+    content: url("assets/target.svg");
     transition: 300ms;
 }
 
@@ -162,7 +162,7 @@ h1 {
 }
 
 .miss::after {
-    content: url("x.svg");
+    content: url("assets/x.svg");
     text-align: center;
 }
 
@@ -196,6 +196,6 @@ h1 {
         height: 50px;
     }
     .miss::after {
-        content: url("x-mobile.svg");
+        content: url("assets/x-mobile.svg");
     }
 }

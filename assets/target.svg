@@ -1,0 +1,10 @@
+<svg width="60" height="60" viewBox="0 0 60 60" fill="none" xmlns="http://www.w3.org/2000/svg">
+<path d="M36.2017 9.56363H50.5453V23.9073" stroke="#0DE991"/>
+<path d="M9.56348 23.9073V9.56363H23.9071" stroke="#0DE991"/>
+<path d="M23.9071 51.5454H9.56348V37.2018" stroke="#0DE991"/>
+<path d="M50.5453 37.2018V51.5454H36.2017" stroke="#0DE991"/>
+<line x1="30.5" y1="6" x2="30.5" y2="17" stroke="#0DE991"/>
+<line x1="17" y1="30.5" x2="5" y2="30.5" stroke="#0DE991"/>
+<line x1="55" y1="30.5" x2="43" y2="30.5" stroke="#0DE991"/>
+<line x1="30.5" y1="44" x2="30.5" y2="55" stroke="#0DE991"/>
+</svg>
