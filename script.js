@@ -115,8 +115,42 @@ let cachedListeners = []; // Stores event listeners temporarily
 let shipOrientation = 0 // Ship orientation: 0 = horizontal; 1 = vertical
 let indices = [] // Stores current selected index placement from user input
 
-// When a click is triggered on the cells
-function placeShip () {
+function computeShipIndices (index) {
+    if (shipOrientation === 0) {
+        // Horizontal
+        if (index % boardSize === 0) {
+            return shipPositionLeft(index)
+        } else if (index % boardSize === boardSize - 1) {
+            return shipPositionRight(index)
+        } else {
+            return shipPositionMidH(index)
+        }
+    } else {
+        // Vertical
+        if (index < boardSize) {
+            return shipPositionTop(index)
+        } else if (index >= boardSize * (boardSize - 1)) {
+            return shipPositionBottom(index)
+        } else {
+            return shipPositionMidV(index)
+        }
+    }
+}
+
+// When a click/tap is triggered on a cell
+function placeShip (index) {
+    // Clear any leftover hover-preview highlight (desktop) before placing,
+    // so we don't depend on a prior mouseover having fired (mobile has no hover)
+    if (indices.length) {
+        for (i of indices) {
+            cells[i].classList.remove('highlightShip')
+        }
+    }
+
+    // Compute placement fresh from the tapped/clicked cell - works identically
+    // whether or not a hover event ran first
+    indices = computeShipIndices(index)
+
     gameData[turn].shipLocation = indices // Stores the selected indices into the current players game data
 
     // Removes event listeners on cells (click & hover functions)
@@ -130,7 +164,7 @@ function placeShip () {
     
     // Adds highlight colors to selected ship placement
     for (i of indices) {
-        cells[i].classList.toggle('placedShip')
+        cells[i].classList.add('placedShip')
     }
 
     // Hides / unhides buttons
@@ -143,7 +177,8 @@ function placeShip () {
 function resetShip () {
     // Clears the highlights for the previously selected cells
     for (i of indices) {
-        cells[i].classList.toggle('placedShip')
+        cells[i].classList.remove('placedShip')
+        cells[i].classList.remove('highlightShip')
     }
 
     placeShipAddEventListeners() // Enables the hover and click functionality
@@ -153,10 +188,7 @@ function resetShip () {
     document.getElementById('confirm-ship-btn').classList.toggle('hidden')
     document.getElementById('reset-ship-btn').classList.toggle('hidden')
 
-    // Removes highlights from previously selected cells
-    for (i of gameData[turn].shipLocation) {
-        cells[i].classList.toggle('highlightShip')
-    }
+    indices = [] // Clear so a stray preview from a previous device state can't leak in
 }
 
 // Rotates the ship 90 degrees; triggered by rotate-ship-btn on click
@@ -171,46 +203,11 @@ function highlightShip (indices) {
     }
 }
 
-// Identifies the highlighted ships on hover
+// Identifies the highlighted ships on hover (desktop preview only;
+// placement itself no longer depends on this having run - see placeShip)
 function placeShipHover (index) {
-
-    // If orientation is horizontal
-    if (shipOrientation === 0) {
-        // If hovered cell is on the leftmost column
-        if (index % boardSize === 0) { 
-            indices = shipPositionLeft (index) // Gets the indices 
-            highlightShip (indices) // Sends the indices for highlights
-        } 
-        // If hovered cell is on the rightmost column
-        else if (index % boardSize === boardSize - 1) { 
-            indices = shipPositionRight (index) // Gets the indices 
-            highlightShip (indices) // Sends the indices for highlights
-        } 
-        // If hovered cell is in the middle
-        else {
-            indices = shipPositionMidH (index) // Gets the indices 
-            highlightShip (indices) // Sends the indices for highlights
-        }
-    } 
-    // If orientation is horizontal
-    else if (shipOrientation === 1) {
-        // If hovered cell is on the top row
-        if (index < boardSize) {
-            indices = shipPositionTop (index) // Gets the indices 
-            highlightShip (indices) // Sends the indices for highlights
-        } 
-        // If hovered cell is on the bottom row
-        else if (index >= boardSize * (boardSize - 1)) {
-            indices = shipPositionBottom (index) // Gets the indices 
-            highlightShip (indices) // Sends the indices for highlights
-        } 
-        // If hovered cell is in the middle
-        else {
-            indices = shipPositionMidV (index) // Gets the indices 
-            highlightShip (indices) // Sends the indices for highlights
-        }
-    }
-    
+    indices = computeShipIndices(index) // Gets the indices
+    highlightShip (indices) // Sends the indices for highlights
 }
 
 // Adds event listeners to cells for hover in and out and click events using handling method
@@ -227,8 +224,8 @@ function placeShipAddEventListeners() {
         cachedListeners.push({ element: cell, handler: handler });
     })
 
-    cells.forEach((cell) => {
-        const handler = () => placeShip();
+    cells.forEach((cell, index) => {
+        const handler = () => placeShip(index);
         cell.addEventListener('click', handler);
         cachedListeners.push({ element: cell, handler: handler });
     })

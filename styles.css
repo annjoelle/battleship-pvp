@@ -14,6 +14,11 @@
     text-align: center;
 }
 
+button, .cell {
+    touch-action: manipulation; /* removes 300ms tap delay & prevents double-tap zoom on controls */
+    -webkit-tap-highlight-color: transparent; /* removes gray flash on tap (iOS/Android) */
+}
+
 html, body {
     height: 100%;
 }
@@ -92,12 +97,14 @@ h1 {
     cursor: pointer;
 }
 
-#start-game-btn:hover {
-    background-color: #9187FF;
-    transition: 300ms;
-    letter-spacing: 1.5px;
-    box-shadow: 0px 25px 60px #00000019;
-    transform: translateY(-5px);
+@media (hover: hover) and (pointer: fine) {
+    #start-game-btn:hover {
+        background-color: #9187FF;
+        transition: 300ms;
+        letter-spacing: 1.5px;
+        box-shadow: 0px 25px 60px #00000019;
+        transform: translateY(-5px);
+    }
 }
 
 /* ----------------------- GAME --------------------- */
@@ -123,9 +130,11 @@ h1 {
     cursor: pointer;
 }
 
-.active-cells:hover{
-    content: url("assets/target.svg");
-    transition: 300ms;
+@media (hover: hover) and (pointer: fine) {
+    .active-cells:hover{
+        content: url("assets/target.svg");
+        transition: 300ms;
+    }
 }
 
 .highlightShip {
@@ -148,12 +157,14 @@ h1 {
     cursor: pointer;
 }
 
-#buttons-wrapper > button:hover {
-    background-color: #9187FF;
-    transition: 300ms;
-    letter-spacing: 1px;
-    box-shadow: 0px 25px 60px #00000019;
-    transform: translateY(-5px);
+@media (hover: hover) and (pointer: fine) {
+    #buttons-wrapper > button:hover {
+        background-color: #9187FF;
+        transition: 300ms;
+        letter-spacing: 1px;
+        box-shadow: 0px 25px 60px #00000019;
+        transform: translateY(-5px);
+    }
 }
 
 #win-message {
@@ -202,5 +213,28 @@ h1 {
     }
     .miss::after {
         content: url("assets/x-mobile.svg");
+    }
+}
+
+@media (max-width: 400px) {
+    .cell {
+        width: 42px;
+        height: 42px;
+    }
+    h1 {
+        font-size: 42px;
+    }
+    #title-message {
+        font-size: 26px;
+    }
+    #gen-message {
+        font-size: 22px;
+    }
+    .instructions-text {
+        font-size: 20px;
+    }
+    #buttons-wrapper > button {
+        font-size: 18px;
+        padding: 6px 12px;
     }
 }
