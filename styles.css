@@ -234,6 +234,10 @@ h1 {
     .instructions-text {
         font-size: 20px;
     }
+    .miss::after {
+        content: url("assets/x-42px.svg");
+        text-align: center;
+    }
     #buttons-wrapper > button {
         font-size: 18px;
         padding: 6px 12px;
